@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>全部商品 · HillMoon 山月</title>
+  <meta name="description" content="HillMoon 山月全部商品：手链、项链、耳饰，可按珍珠、水晶、陶瓷、镀银、钢钛材质挑选。">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="latin">HILLMOON</span>
+      <span class="han">山月</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="products.html" aria-current="page">全部商品</a>
+      <a href="about.html">品牌故事</a>
+      <a href="index.html#contact">联络</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <h1>全部商品</h1>
+  <p class="latin">The Collection</p>
+</section>
+
+<main class="section wrap">
+  <div class="filter-bar" role="group" aria-label="商品筛选">
+    <div class="filter-group" data-key="cat">
+      <span class="filter-label">类别</span>
+      <button class="filter-btn active" data-value="全部">全部</button>
+      <button class="filter-btn" data-value="手链">手链</button>
+      <button class="filter-btn" data-value="项链">项链</button>
+      <button class="filter-btn" data-value="耳饰">耳饰</button>
+    </div>
+    <div class="filter-group" data-key="mat">
+      <span class="filter-label">材质</span>
+      <button class="filter-btn active" data-value="全部">全部</button>
+      <button class="filter-btn" data-value="珍珠">珍珠</button>
+      <button class="filter-btn" data-value="水晶">水晶</button>
+      <button class="filter-btn" data-value="陶瓷">陶瓷</button>
+      <button class="filter-btn" data-value="镀银">镀银</button>
+      <button class="filter-btn" data-value="钢钛">钢钛</button>
+    </div>
+  </div>
+
+  <div class="product-grid" id="catalog-grid"></div>
+  <p class="filter-empty" id="catalog-empty" hidden>此组合暂无商品——山中无此物，换个方向看看。</p>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-foot" style="border-top:none; padding-top:0;">
+      <span>© 2026 HillMoon 山月 · 保留所有权利</span>
+      <span>山有清辉，月照佩人</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
