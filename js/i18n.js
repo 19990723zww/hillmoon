@@ -58,6 +58,10 @@ const I18N = {
     "product.soldout": "Hết hàng",
     "tag.new": "Mới",
     "tag.hero": "Nổi bật",
+    "preorder.label": "Đặt trước −10%",
+    "preorder.title": "Đặt trước · Giá chim sớm −10%",
+    "preorder.body": "Đặt trước «{name}» với giá chim sớm {early} (giá gốc {orig}). Nhắn cho chúng tôi kèm tên sản phẩm, chúng tôi sẽ xác nhận và giao khi có hàng:",
+    "preorder.close": "Đóng",
 
     "about.title": "Câu chuyện thương hiệu",
     "about.p0": "«Sơn Nguyệt» — một tĩnh, một động. Núi là nền không đổi, trăng là ánh sáng luôn mới. Chúng tôi tin trang sức cũng nên như vậy: dáng hình lặng lẽ và kiềm chế, nhưng ánh sắc thay đổi theo người đeo, theo thời khắc, theo ánh sáng.",
@@ -127,6 +131,10 @@ const I18N = {
     "product.soldout": "Sold out",
     "tag.new": "New",
     "tag.hero": "Signature",
+    "preorder.label": "Pre-order −10%",
+    "preorder.title": "Pre-order · Early bird −10%",
+    "preorder.body": "Pre-order \"{name}\" at the early-bird price of {early} (regular {orig}). Message us with the product name and we'll confirm your order and ship as soon as it's in stock:",
+    "preorder.close": "Close",
 
     "about.title": "Our Story",
     "about.p0": "\"Hill\" and \"moon\" — one still, one ever-changing. The hill is the unmoving ground; the moon is light made new each night. We believe jewelry should be the same: quiet and restrained in form, its luster changing with the wearer, the hour, the light.",
@@ -196,6 +204,10 @@ const I18N = {
     "product.soldout": "售罄",
     "tag.new": "新品",
     "tag.hero": "主打",
+    "preorder.label": "预订 9 折",
+    "preorder.title": "预订 · 早鸟 9 折",
+    "preorder.body": "以早鸟价 {early} 预订「{name}」（原价 {orig}）。私信我们并注明商品名，到货后第一时间为你确认发货：",
+    "preorder.close": "关闭",
 
     "about.title": "品牌故事",
     "about.p0": "「山月」二字，一静一动。山是不动的底色，月是常新的光。我们相信首饰也应如此：形制安静克制，光泽却随人、随时、随光线而变。",

@@ -67,6 +67,10 @@ function productArt(p, name) {
   </svg>`;
 }
 
+function earlyPrice(price) {
+  return Math.round((price * 0.9) / 1000) * 1000;
+}
+
 function productCard(p) {
   const lang = getLang();
   const name = p.name[lang] || p.name.vi;
@@ -84,9 +88,63 @@ function productCard(p) {
         <span class="product-material">${t("mat." + p.mat)}</span>
         <span class="product-price">${fmtPrice(p.price)}</span>
       </div>
+      <button class="product-preorder" type="button" data-preorder="${p.id}">
+        <span>${t("preorder.label")}</span>
+        <span class="early">${fmtPrice(earlyPrice(p.price))}</span>
+      </button>
     </div>
   </article>`;
 }
+
+/* ———— 预订弹窗 ———— */
+
+function ensureModal() {
+  let overlay = document.getElementById("preorder-modal");
+  if (overlay) return overlay;
+  overlay = document.createElement("div");
+  overlay.id = "preorder-modal";
+  overlay.className = "hm-modal";
+  overlay.hidden = true;
+  overlay.innerHTML = `
+    <div class="hm-modal-card" role="dialog" aria-modal="true" aria-labelledby="preorder-title">
+      <h3 id="preorder-title"></h3>
+      <p class="hm-modal-body"></p>
+      <p class="hm-modal-contact">
+        Xiaohongshu · @HillMoon山月<br>
+        Email · hello@hillmoon.example
+      </p>
+      <button class="btn btn-dark btn-small hm-modal-close" type="button"></button>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay || e.target.closest(".hm-modal-close")) overlay.hidden = true;
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") overlay.hidden = true;
+  });
+  return overlay;
+}
+
+function openPreorder(p) {
+  const overlay = ensureModal();
+  const lang = getLang();
+  const name = p.name[lang] || p.name.vi;
+  overlay.querySelector("#preorder-title").textContent = t("preorder.title");
+  overlay.querySelector(".hm-modal-body").textContent = t("preorder.body")
+    .replace("{name}", name)
+    .replace("{early}", fmtPrice(earlyPrice(p.price)))
+    .replace("{orig}", fmtPrice(p.price));
+  overlay.querySelector(".hm-modal-close").textContent = t("preorder.close");
+  overlay.hidden = false;
+  overlay.querySelector(".hm-modal-close").focus();
+}
+
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-preorder]");
+  if (!btn || !_catalog) return;
+  const p = _catalog.products.find((x) => x.id === btn.dataset.preorder);
+  if (p) openPreorder(p);
+});
 
 function renderProducts(el, list) {
   el.innerHTML = list.map(productCard).join("");
