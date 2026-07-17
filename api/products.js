@@ -23,6 +23,11 @@ function sanitize(doc) {
         en: String(p.name?.en || "").slice(0, 200),
         zh: String(p.name?.zh || "").slice(0, 200),
       },
+      desc: {
+        vi: String(p.desc?.vi || "").slice(0, 1000),
+        en: String(p.desc?.en || "").slice(0, 1000),
+        zh: String(p.desc?.zh || "").slice(0, 1000),
+      },
     };
   });
   return { settings: { visibleCats }, products };

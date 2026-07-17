@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tất cả sản phẩm · HillMoon Sơn Nguyệt</title>
-  <meta name="description" content="Tất cả sản phẩm HillMoon: vòng tay, dây chuyền, hoa tai — ngọc trai, pha lê, gốm sứ, mạ bạc, thép titan.">
+  <title>Sản phẩm · HillMoon Sơn Nguyệt</title>
+  <meta name="description" content="Chi tiết sản phẩm HillMoon.">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Serif+SC:wght@400;500;600&family=Noto+Serif:ital,wght@0,400;0,500;0,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body data-page="products">
+<body data-page="product">
 
 <header class="site-header">
   <div class="wrap">
@@ -42,33 +42,8 @@
   </div>
 </header>
 
-<section class="page-hero">
-  <h1 data-i18n="products.title">Tất cả sản phẩm</h1>
-  <p class="latin">The Collection</p>
-</section>
-
-<main class="section wrap">
-  <div class="filter-bar" role="group" aria-label="Filter">
-    <div class="filter-group" data-key="cat">
-      <span class="filter-label" data-i18n="filter.cat">Loại</span>
-      <button class="filter-btn active" data-value="all" data-i18n="filter.all">Tất cả</button>
-      <button class="filter-btn" data-value="bracelet" data-i18n="cat.bracelet">Vòng tay</button>
-      <button class="filter-btn" data-value="necklace" data-i18n="cat.necklace">Dây chuyền</button>
-      <button class="filter-btn" data-value="earring" data-i18n="cat.earring">Hoa tai</button>
-    </div>
-    <div class="filter-group" data-key="mat">
-      <span class="filter-label" data-i18n="filter.mat">Chất liệu</span>
-      <button class="filter-btn active" data-value="all" data-i18n="filter.all">Tất cả</button>
-      <button class="filter-btn" data-value="pearl" data-i18n="mat.pearl">Ngọc trai</button>
-      <button class="filter-btn" data-value="crystal" data-i18n="mat.crystal">Pha lê</button>
-      <button class="filter-btn" data-value="ceramic" data-i18n="mat.ceramic">Gốm sứ</button>
-      <button class="filter-btn" data-value="silver" data-i18n="mat.silver">Mạ bạc</button>
-      <button class="filter-btn" data-value="titanium" data-i18n="mat.titanium">Thép titan</button>
-    </div>
-  </div>
-
-  <div class="product-grid" id="catalog-grid"></div>
-  <p class="filter-empty" id="catalog-empty" data-i18n="products.empty" hidden>Chưa có sản phẩm trong mục này.</p>
+<main class="section wrap detail-main" id="detail-root">
+  <p class="filter-empty">…</p>
 </main>
 
 <footer class="site-footer">
@@ -82,6 +57,6 @@
 
 <script src="js/i18n.js"></script>
 <script src="js/products.js"></script>
-<script src="js/main.js"></script>
+<script src="js/detail.js"></script>
 </body>
 </html>

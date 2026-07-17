@@ -45,6 +45,12 @@
   </section>
 
   <section id="dashboard" hidden>
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="products" type="button">商品管理</button>
+      <button class="admin-tab" data-tab="orders" type="button">订单管理 <span class="order-badge" id="order-badge" hidden></span></button>
+    </div>
+
+    <div id="panel-products">
     <div class="admin-toolbar">
       <div class="admin-cats" id="cat-toggles">
         <span class="hint">上架类别</span>
@@ -58,6 +64,17 @@
       </div>
     </div>
     <div class="admin-list" id="admin-list"></div>
+    </div>
+
+    <div id="panel-orders" hidden>
+      <div class="admin-toolbar">
+        <span class="hint" id="orders-hint">最近订单（货到付款，发货前请电话确认）</span>
+        <div class="admin-actions">
+          <button class="btn btn-dark btn-small" id="orders-refresh" type="button">刷新</button>
+        </div>
+      </div>
+      <div class="admin-list" id="orders-list"></div>
+    </div>
   </section>
 
 </main>

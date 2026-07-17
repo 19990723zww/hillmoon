@@ -25,10 +25,19 @@
       <a href="about.html" data-i18n="nav.about">Câu chuyện</a>
       <a href="#contact" data-i18n="nav.contact">Liên hệ</a>
     </nav>
-    <div class="lang-switch" role="group" aria-label="Language">
-      <button class="lang-btn active" data-lang="vi">VI</button>
-      <button class="lang-btn" data-lang="en">EN</button>
-      <button class="lang-btn" data-lang="zh">中</button>
+    <div class="header-tools">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button class="lang-btn active" data-lang="vi">VI</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh">中</button>
+      </div>
+      <a class="cart-link" href="cart" aria-label="Cart">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M5 8h14l-1.2 11a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8Z"/>
+          <path d="M9 10V6a3 3 0 0 1 6 0v4"/>
+        </svg>
+        <span class="cart-count" hidden>0</span>
+      </a>
     </div>
   </div>
 </header>

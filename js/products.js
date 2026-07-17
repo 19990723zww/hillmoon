@@ -1,4 +1,4 @@
-/* 商品渲染：数据来自 /api/products，实拍图优先，否则按材质生成线描插画 */
+/* 商品渲染 + 购物车核心：数据来自 /api/products，实拍图优先，否则按材质生成线描插画 */
 
 const MATERIAL_STYLE = {
   pearl:    { fill: "#F3EAD5", edge: "#CBB080" },
@@ -77,17 +77,21 @@ function productCard(p) {
   const soldout = p.stock <= 0;
   return `
   <article class="product-card reveal" data-cat="${p.cat}" data-mat="${p.mat}">
-    <div class="product-art">
-      ${p.tag ? `<span class="product-tag">${t("tag." + p.tag)}</span>` : ""}
-      ${soldout ? `<span class="product-soldout">${t("product.soldout")}</span>` : ""}
-      ${productArt(p, name)}
-    </div>
-    <div class="product-info">
-      <h3 class="product-name">${name}</h3>
-      <div class="product-meta">
-        <span class="product-material">${t("mat." + p.mat)}</span>
-        <span class="product-price">${fmtPrice(p.price)}</span>
+    <a class="product-link" href="product?id=${p.id}">
+      <div class="product-art">
+        ${p.tag ? `<span class="product-tag">${t("tag." + p.tag)}</span>` : ""}
+        ${soldout ? `<span class="product-soldout">${t("product.soldout")}</span>` : ""}
+        ${productArt(p, name)}
       </div>
+      <div class="product-info">
+        <h3 class="product-name">${name}</h3>
+        <div class="product-meta">
+          <span class="product-material">${t("mat." + p.mat)}</span>
+          <span class="product-price">${fmtPrice(p.price)}</span>
+        </div>
+      </div>
+    </a>
+    <div class="product-info product-info-foot">
       <button class="product-preorder" type="button" data-preorder="${p.id}">
         <span>${t("preorder.label")}</span>
         <span class="early">${fmtPrice(earlyPrice(p.price))}</span>
@@ -95,56 +99,6 @@ function productCard(p) {
     </div>
   </article>`;
 }
-
-/* ———— 预订弹窗 ———— */
-
-function ensureModal() {
-  let overlay = document.getElementById("preorder-modal");
-  if (overlay) return overlay;
-  overlay = document.createElement("div");
-  overlay.id = "preorder-modal";
-  overlay.className = "hm-modal";
-  overlay.hidden = true;
-  overlay.innerHTML = `
-    <div class="hm-modal-card" role="dialog" aria-modal="true" aria-labelledby="preorder-title">
-      <h3 id="preorder-title"></h3>
-      <p class="hm-modal-body"></p>
-      <p class="hm-modal-contact">
-        Xiaohongshu · @HillMoon山月<br>
-        Email · hello@hillmoon.example
-      </p>
-      <button class="btn btn-dark btn-small hm-modal-close" type="button"></button>
-    </div>`;
-  document.body.appendChild(overlay);
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay || e.target.closest(".hm-modal-close")) overlay.hidden = true;
-  });
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") overlay.hidden = true;
-  });
-  return overlay;
-}
-
-function openPreorder(p) {
-  const overlay = ensureModal();
-  const lang = getLang();
-  const name = p.name[lang] || p.name.vi;
-  overlay.querySelector("#preorder-title").textContent = t("preorder.title");
-  overlay.querySelector(".hm-modal-body").textContent = t("preorder.body")
-    .replace("{name}", name)
-    .replace("{early}", fmtPrice(earlyPrice(p.price)))
-    .replace("{orig}", fmtPrice(p.price));
-  overlay.querySelector(".hm-modal-close").textContent = t("preorder.close");
-  overlay.hidden = false;
-  overlay.querySelector(".hm-modal-close").focus();
-}
-
-document.addEventListener("click", (e) => {
-  const btn = e.target.closest("[data-preorder]");
-  if (!btn || !_catalog) return;
-  const p = _catalog.products.find((x) => x.id === btn.dataset.preorder);
-  if (p) openPreorder(p);
-});
 
 function renderProducts(el, list) {
   el.innerHTML = list.map(productCard).join("");
@@ -164,3 +118,61 @@ function publicProducts(doc) {
   const cats = doc.settings.visibleCats;
   return doc.products.filter((p) => p.visible && cats.includes(p.cat));
 }
+
+/* ———— 购物车（localStorage） ———— */
+
+const CART_KEY = "hm_cart";
+
+function getCart() {
+  try {
+    const c = JSON.parse(localStorage.getItem(CART_KEY));
+    return Array.isArray(c) ? c : [];
+  } catch {
+    return [];
+  }
+}
+
+function setCart(c) {
+  localStorage.setItem(CART_KEY, JSON.stringify(c));
+  updateCartBadge();
+}
+
+function addToCart(id, qty = 1, preorder = false) {
+  const c = getCart();
+  const item = c.find((x) => x.id === id && !!x.preorder === preorder);
+  if (item) item.qty = Math.min(99, item.qty + qty);
+  else c.push({ id, qty: Math.min(99, qty), preorder });
+  setCart(c);
+  hmToast(t("toast.added"));
+}
+
+function updateCartBadge() {
+  const n = getCart().reduce((s, x) => s + x.qty, 0);
+  document.querySelectorAll(".cart-count").forEach((el) => {
+    el.textContent = n;
+    el.hidden = !n;
+  });
+}
+
+function hmToast(msg) {
+  let el = document.getElementById("hm-toast");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "hm-toast";
+    el.className = "hm-toast";
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove("show"), 2200);
+}
+
+/* 商品卡上的预订按钮：按 9 折加入购物车 */
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-preorder]");
+  if (!btn) return;
+  addToCart(btn.dataset.preorder, 1, true);
+});
+
+document.addEventListener("DOMContentLoaded", updateCartBadge);

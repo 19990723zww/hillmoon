@@ -4,13 +4,19 @@
 
 ## 结构
 
-- `index.html` / `products.html` / `about.html` — 前台三页，默认越南语，右上角可切 EN / 中
-- `admin.html` — 后台（`/admin`），账号密码登录
-- `js/i18n.js` — 三语文案字典；`js/products.js` — 商品渲染；`js/admin.js` — 后台逻辑
+- `index.html` / `products.html` / `about.html` — 前台页面，默认越南语，右上角可切 EN / 中
+- `product.html`（`/product?id=xx`）— 商品详情：数量、加入购物车、立即购买、预订（9 折）
+- `cart.html`（`/cart`）— 购物车 + 下单（货到付款：姓名/电话/地址，订单入后台）
+- `admin.html` — 后台（`/admin`），账号密码登录；商品管理 + 订单管理两个标签页
+- `js/i18n.js` — 三语文案字典；`js/products.js` — 商品渲染 + 购物车核心（localStorage）
+- `js/detail.js` / `js/cart.js` / `js/admin.js` — 详情页 / 购物车页 / 后台逻辑
 - `api/` — Vercel Serverless Functions：
   - `login.js` — 登录 / 登出 / 会话检查（HMAC 签名 cookie，7 天有效）
   - `products.js` — GET 公开读取商品；PUT 保存（需登录）
   - `upload.js` — 图片上传到 Vercel Blob（需登录，前端已压缩到 1200px JPEG）
+  - `orders.js` — POST 公开下单（价格由服务端按商品表重算，防篡改）；
+    GET 列表 / PATCH 改状态 / DELETE 删除（需登录）。订单状态编码在文件名中，
+    内容不可变，规避 Blob 覆盖写的 CDN 缓存延迟
   - `_seed.js` — 初始占位商品（Blob 里还没有数据时使用）
 
 ## 数据与图片

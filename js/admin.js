@@ -90,6 +90,9 @@ function rowHTML(p, i) {
       <input class="admin-input fw" data-field="name.vi" value="${esc(p.name.vi)}" placeholder="商品名（越南语，主语言）">
       <input class="admin-input" data-field="name.en" value="${esc(p.name.en)}" placeholder="商品名（英语）">
       <input class="admin-input" data-field="name.zh" value="${esc(p.name.zh)}" placeholder="商品名（中文）">
+      <textarea class="admin-input fw" data-field="desc.vi" rows="2" placeholder="详情描述（越南语，留空则用材质介绍）">${esc(p.desc?.vi)}</textarea>
+      <textarea class="admin-input" data-field="desc.en" rows="2" placeholder="描述（英语）">${esc(p.desc?.en)}</textarea>
+      <textarea class="admin-input" data-field="desc.zh" rows="2" placeholder="描述（中文）">${esc(p.desc?.zh)}</textarea>
       <label class="admin-mini">类别
         <select class="admin-select" data-field="cat">${options(CATS, p.cat)}</select>
       </label>
@@ -124,7 +127,10 @@ function renderList() {
 
 function setField(p, path, value) {
   if (path.startsWith("name.")) p.name[path.slice(5)] = value;
-  else if (path === "price" || path === "stock") p[path] = Number(value) || 0;
+  else if (path.startsWith("desc.")) {
+    p.desc = p.desc || { vi: "", en: "", zh: "" };
+    p.desc[path.slice(5)] = value;
+  } else if (path === "price" || path === "stock") p[path] = Number(value) || 0;
   else if (path === "visible" || path === "featured") p[path] = value;
   else p[path] = value;
 }
@@ -171,9 +177,113 @@ $("#add-btn").addEventListener("click", () => {
     cat: "bracelet", mat: "pearl", price: 0, stock: 0,
     tag: "", featured: false, visible: false, img: null,
     name: { vi: "", en: "", zh: "" },
+    desc: { vi: "", en: "", zh: "" },
   });
   renderList();
   $("#admin-list").scrollIntoView({ behavior: "smooth" });
+});
+
+/* ———— 订单管理 ———— */
+
+const ORDER_STATUS = { new: "新订单", confirmed: "已确认", shipped: "已发货", done: "已完成" };
+const CAT_LABEL = { bracelet: "手链", necklace: "项链", earring: "耳饰" };
+
+document.querySelectorAll(".admin-tab").forEach((tab) => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".admin-tab").forEach((x) => x.classList.toggle("active", x === tab));
+    $("#panel-products").hidden = tab.dataset.tab !== "products";
+    $("#panel-orders").hidden = tab.dataset.tab !== "orders";
+    if (tab.dataset.tab === "orders") loadOrders();
+  });
+});
+
+$("#orders-refresh").addEventListener("click", loadOrders);
+
+async function loadOrders() {
+  const listEl = $("#orders-list");
+  listEl.innerHTML = `<p class="admin-cats hint" style="padding:20px;">加载中…</p>`;
+  try {
+    const { orders } = await api("/api/orders");
+    const fresh = orders.filter((o) => o.status === "new").length;
+    $("#order-badge").hidden = !fresh;
+    $("#order-badge").textContent = fresh;
+    if (!orders.length) {
+      listEl.innerHTML = `<p class="admin-cats hint" style="padding:20px;">暂无订单</p>`;
+      return;
+    }
+    listEl.innerHTML = orders.map(orderHTML).join("");
+  } catch (e) {
+    listEl.innerHTML = `<p class="admin-error" style="padding:20px;">加载失败：${e.message}</p>`;
+  }
+}
+
+function orderHTML(o) {
+  const date = new Date(o.ts).toLocaleString("zh-CN", { hour12: false });
+  const items = o.items.map((it) =>
+    `<tr>
+      <td>${esc(it.name?.zh || it.name?.vi || it.id)}${it.preorder ? ' <span class="order-pre">预订 9 折</span>' : ""}</td>
+      <td>×${it.qty}</td>
+      <td>₫ ${Number(it.unit).toLocaleString("vi-VN")}</td>
+      <td>₫ ${Number(it.sum).toLocaleString("vi-VN")}</td>
+    </tr>`).join("");
+  return `
+  <article class="admin-row order-row" data-pathname="${esc(o.pathname)}">
+    <div class="order-head">
+      <div>
+        <strong>${esc(o.no)}</strong>
+        <span class="order-date">${date}</span>
+      </div>
+      <div class="admin-actions">
+        <select class="admin-select order-status" data-status>
+          ${Object.entries(ORDER_STATUS).map(([v, l]) =>
+            `<option value="${v}" ${v === o.status ? "selected" : ""}>${l}</option>`).join("")}
+        </select>
+        <button class="admin-del" data-orderdel type="button">删除</button>
+      </div>
+    </div>
+    <div class="order-body">
+      <p class="order-customer">
+        ${esc(o.customer.name)} · ${esc(o.customer.phone)}<br>
+        ${esc(o.customer.address)}
+        ${o.customer.note ? `<br>备注：${esc(o.customer.note)}` : ""}
+      </p>
+      <table class="order-items">${items}</table>
+      <p class="order-total">合计 <strong>₫ ${Number(o.total).toLocaleString("vi-VN")}</strong></p>
+    </div>
+  </article>`;
+}
+
+$("#orders-list").addEventListener("change", async (e) => {
+  const sel = e.target.closest("[data-status]");
+  const row = e.target.closest(".order-row");
+  if (!sel || !row) return;
+  try {
+    const r = await api("/api/orders", {
+      method: "PATCH",
+      body: JSON.stringify({ pathname: row.dataset.pathname, status: sel.value }),
+    });
+    row.dataset.pathname = r.pathname;
+    toast("订单状态已更新");
+    loadOrders();
+  } catch (err) {
+    toast("更新失败：" + err.message, true);
+  }
+});
+
+$("#orders-list").addEventListener("click", async (e) => {
+  const row = e.target.closest(".order-row");
+  if (!row || !e.target.closest("[data-orderdel]")) return;
+  if (!confirm("确定删除该订单？不可恢复。")) return;
+  try {
+    await api("/api/orders", {
+      method: "DELETE",
+      body: JSON.stringify({ pathname: row.dataset.pathname }),
+    });
+    toast("订单已删除");
+    loadOrders();
+  } catch (err) {
+    toast("删除失败：" + err.message, true);
+  }
 });
 
 $("#save-btn").addEventListener("click", async () => {
