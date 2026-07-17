@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="vi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HillMoon 山月 · 新中式首饰</title>
-  <meta name="description" content="HillMoon 山月，新中式首饰品牌。珍珠、水晶、陶瓷、镀银、钢钛，手作手链、项链与耳饰——山月入怀，东方有信物。">
+  <title>HillMoon Sơn Nguyệt · Trang sức Á Đông</title>
+  <meta name="description" content="HillMoon (Sơn Nguyệt) — trang sức thủ công phong cách Á Đông. Ngọc trai, pha lê, gốm sứ, mạ bạc, thép titan: vòng tay, dây chuyền và hoa tai.">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Serif+SC:wght@400;500;600&family=Noto+Serif:ital,wght@0,400;0,500;0,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body data-page="index">
 
 <header class="site-header">
   <div class="wrap">
@@ -19,22 +19,27 @@
       <span class="latin">HILLMOON</span>
       <span class="han">山月</span>
     </a>
-    <nav class="site-nav" aria-label="主导航">
-      <a href="index.html" aria-current="page">首页</a>
-      <a href="products.html">全部商品</a>
-      <a href="about.html">品牌故事</a>
-      <a href="#contact">联络</a>
+    <nav class="site-nav" aria-label="Menu">
+      <a href="index.html" aria-current="page" data-i18n="nav.home">Trang chủ</a>
+      <a href="products.html" data-i18n="nav.products">Sản phẩm</a>
+      <a href="about.html" data-i18n="nav.about">Câu chuyện</a>
+      <a href="#contact" data-i18n="nav.contact">Liên hệ</a>
     </nav>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button class="lang-btn active" data-lang="vi">VI</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="zh">中</button>
+    </div>
   </div>
 </header>
 
 <section class="hero">
   <div class="wrap hero-inner">
     <div class="hero-copy">
-      <p class="hero-eyebrow">新中式手作首饰 · EST. 2026</p>
-      <h1 class="hero-title">山月入怀，<br>东方有信物。</h1>
-      <p class="hero-sub">取山之骨，取月之光。珍珠、水晶、陶瓷与金属，在腕间、颈间、耳畔，各安其位。</p>
-      <a class="btn" href="products.html">进入商品目录</a>
+      <p class="hero-eyebrow" data-i18n="hero.eyebrow">Trang sức thủ công Á Đông · EST. 2026</p>
+      <h1 class="hero-title" data-i18n="hero.title">Trăng núi vào lòng,<br>tín vật phương Đông.</h1>
+      <p class="hero-sub" data-i18n="hero.sub">Lấy dáng của núi, lấy ánh sáng của trăng. Ngọc trai, pha lê, gốm sứ và kim loại — mỗi thứ một chỗ: nơi cổ tay, vòng cổ và bên tai.</p>
+      <a class="btn" href="products.html" data-i18n="hero.cta">Xem bộ sưu tập</a>
     </div>
 
     <p class="hero-verse" aria-hidden="true">山有清辉&emsp;月照佩人<span class="seal">山月</span></p>
@@ -67,46 +72,46 @@
 
 <section class="section wrap" id="featured">
   <div class="section-head reveal">
-    <h2 class="han-title">精选系列</h2>
+    <h2 class="han-title" data-i18n="featured.title">Sản phẩm nổi bật</h2>
     <span class="latin-title">Featured</span>
   </div>
   <div class="product-grid" id="featured-grid"></div>
   <p style="text-align:center; margin-top:48px;" class="reveal">
-    <a class="btn btn-dark" href="products.html">查看全部十二件</a>
+    <a class="btn btn-dark" href="products.html" data-i18n="featured.viewAll">Xem tất cả sản phẩm</a>
   </p>
 </section>
 
 <section class="section materials">
   <div class="wrap">
     <div class="section-head reveal">
-      <h2 class="han-title">材质之道</h2>
+      <h2 class="han-title" data-i18n="materials.title">Chất liệu</h2>
       <span class="latin-title">Five Materials</span>
     </div>
     <div class="material-grid reveal">
       <div class="material-cell">
         <span class="glyph">Pearl</span>
-        <h3>珍珠</h3>
-        <p>淡水珍珠，取月之形。每一颗光泽与弧度皆不相同，如每晚升起的月亮。</p>
+        <h3 data-i18n="mat.pearl">Ngọc trai</h3>
+        <p data-i18n="mat.pearl.desc">Ngọc trai nước ngọt, mang dáng của vầng trăng. Mỗi viên một ánh sắc, một đường cong — như trăng mỗi đêm mỗi khác.</p>
       </div>
       <div class="material-cell">
         <span class="glyph">Crystal</span>
-        <h3>水晶</h3>
-        <p>天然晶体，取山之骨。透光处可见生长的纹理，是时间留在石头里的年轮。</p>
+        <h3 data-i18n="mat.crystal">Pha lê</h3>
+        <p data-i18n="mat.crystal.desc">Tinh thể tự nhiên, cốt cách của núi. Nhìn qua ánh sáng thấy vân đá — vòng tuổi mà thời gian để lại trong đá.</p>
       </div>
       <div class="material-cell">
         <span class="glyph">Ceramic</span>
-        <h3>陶瓷</h3>
-        <p>高温釉色，取窑火之变。青瓷的釉面温润近玉，贴肤无感，久戴不腻。</p>
+        <h3 data-i18n="mat.ceramic">Gốm sứ</h3>
+        <p data-i18n="mat.ceramic.desc">Men nung nhiệt độ cao, biến hóa của lửa lò. Men gốm thanh mát gần như ngọc, đeo lâu vẫn dễ chịu.</p>
       </div>
       <div class="material-cell">
         <span class="glyph">Silver-plated</span>
-        <h3>镀银</h3>
-        <p>银层覆于铜胎，光色清冷。线条极简处最见工——弦不必多，一根就够。</p>
+        <h3 data-i18n="mat.silver">Mạ bạc</h3>
+        <p data-i18n="mat.silver.desc">Lớp bạc phủ trên thân đồng, ánh sáng thanh lạnh. Đường nét càng giản dị càng thấy tay nghề — một sợi dây là đủ.</p>
       </div>
       <div class="material-cell">
         <span class="glyph">Titanium</span>
-        <h3>钢钛</h3>
-        <p>钛钢不惧汗水与岁月，色如墨峰。适合日日佩戴、不摘不换的那一件。</p>
+        <h3 data-i18n="mat.titanium">Thép titan</h3>
+        <p data-i18n="mat.titanium.desc">Thép titan không ngại mồ hôi và năm tháng, màu như đỉnh núi mực. Dành cho món đồ đeo mỗi ngày, không cần tháo ra.</p>
       </div>
     </div>
   </div>
@@ -115,17 +120,17 @@
 <section class="section wrap" id="story">
   <div class="story-inner">
     <div class="story-emblem reveal">
-      <img src="assets/emblem.png" alt="HillMoon 山月徽记：山脊之上一弯新月" loading="lazy">
+      <img src="assets/emblem.png" alt="HillMoon" loading="lazy">
     </div>
     <div class="story-copy reveal">
       <div class="section-head">
-        <h2 class="han-title">品牌故事</h2>
+        <h2 class="han-title" data-i18n="story.title">Câu chuyện thương hiệu</h2>
         <span class="latin-title">The Brand</span>
       </div>
-      <p class="lead">山不言，月不语，<br>好的首饰也一样——安静地陪着人。</p>
-      <p>HillMoon 山月，始于一个简单的念头：把东方山水的静气，做成可以随身佩戴的形状。我们不追逐潮流的响声，只做经得起长久注视的器物。</p>
-      <p>从选珠、配石到窑烧、抛光，每一件都以手工完成主要工序。愿它伴你晨昏，如山间明月，常在，常新。</p>
-      <a class="btn btn-dark" href="about.html">阅读完整故事</a>
+      <p class="lead" data-i18n="story.lead">Núi không nói, trăng không nói.<br>Trang sức đẹp cũng vậy — lặng lẽ ở bên người.</p>
+      <p data-i18n="story.p1">HillMoon (Sơn Nguyệt) bắt đầu từ một ý nghĩ giản dị: đưa sự tĩnh lặng của núi sông phương Đông thành hình dáng có thể mang theo bên mình. Chúng tôi không chạy theo trào lưu, chỉ làm những món đồ chịu được ánh nhìn lâu dài.</p>
+      <p data-i18n="story.p2">Từ chọn ngọc, phối đá đến nung men, đánh bóng — các công đoạn chính đều làm thủ công. Mong nó theo bạn sớm chiều, như trăng sáng giữa núi: luôn ở đó, luôn mới.</p>
+      <a class="btn btn-dark" href="about.html" data-i18n="story.btn">Đọc câu chuyện đầy đủ</a>
     </div>
   </div>
 </section>
@@ -134,29 +139,30 @@
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="assets/logo.png" alt="HillMoon 山月标志">
-        <p>新中式手作首饰。手链 · 项链 · 耳饰，珍珠 · 水晶 · 陶瓷 · 镀银 · 钢钛。</p>
+        <img src="assets/logo.png" alt="HillMoon logo">
+        <p data-i18n="footer.desc">Trang sức thủ công phong cách Á Đông. Vòng tay · Dây chuyền · Hoa tai. Ngọc trai · Pha lê · Gốm sứ · Mạ bạc · Thép titan.</p>
       </div>
       <div class="footer-col">
-        <h4>浏览</h4>
-        <a href="products.html">全部商品</a>
-        <a href="about.html">品牌故事</a>
-        <a href="index.html#featured">精选系列</a>
+        <h4 data-i18n="footer.browse">Khám phá</h4>
+        <a href="products.html" data-i18n="footer.allProducts">Tất cả sản phẩm</a>
+        <a href="about.html" data-i18n="footer.about">Câu chuyện thương hiệu</a>
+        <a href="index.html#featured" data-i18n="footer.featured">Sản phẩm nổi bật</a>
       </div>
       <div class="footer-col">
-        <h4>联络</h4>
-        <span>小红书 · @HillMoon山月</span>
-        <span>微信小店 · 即将开放</span>
-        <span>合作邮箱 · hello@hillmoon.example</span>
+        <h4 data-i18n="footer.contact">Liên hệ</h4>
+        <span>Xiaohongshu · @HillMoon山月</span>
+        <span data-i18n="footer.shop">Cửa hàng online · sắp ra mắt</span>
+        <span data-i18n="footer.email">Email hợp tác · hello@hillmoon.example</span>
       </div>
     </div>
     <div class="footer-foot">
-      <span>© 2026 HillMoon 山月 · 保留所有权利</span>
+      <span data-i18n="footer.copyright">© 2026 HillMoon Sơn Nguyệt · Bảo lưu mọi quyền</span>
       <span>山有清辉，月照佩人</span>
     </div>
   </div>
 </footer>
 
+<script src="js/i18n.js"></script>
 <script src="js/products.js"></script>
 <script src="js/main.js"></script>
 </body>

@@ -1,27 +1,12 @@
-/* 商品数据与鎏金线描插画 */
+/* 商品渲染：数据来自 /api/products，实拍图优先，否则按材质生成线描插画 */
 
 const MATERIAL_STYLE = {
-  珍珠: { fill: "#F3EAD5", edge: "#CBB080", latin: "Pearl" },
-  水晶: { fill: "#DDD3E8", edge: "#AC9FC2", latin: "Crystal" },
-  陶瓷: { fill: "#A9C2B1", edge: "#7E9C8A", latin: "Ceramic" },
-  镀银: { fill: "#D3D6D2", edge: "#A2A8A2", latin: "Silver-plated" },
-  钢钛: { fill: "#7C857F", edge: "#59635C", latin: "Titanium Steel" },
+  pearl:    { fill: "#F3EAD5", edge: "#CBB080" },
+  crystal:  { fill: "#DDD3E8", edge: "#AC9FC2" },
+  ceramic:  { fill: "#A9C2B1", edge: "#7E9C8A" },
+  silver:   { fill: "#D3D6D2", edge: "#A2A8A2" },
+  titanium: { fill: "#7C857F", edge: "#59635C" },
 };
-
-const PRODUCTS = [
-  { id: "yingyue",  name: "映月 · 淡水珍珠项链",  cat: "项链", mat: "珍珠", price: 489, tag: "主打", featured: true },
-  { id: "shanlan",  name: "山岚 · 白水晶手链",    cat: "手链", mat: "水晶", price: 329, featured: true },
-  { id: "qingciyue",name: "青瓷月 · 陶瓷耳坠",    cat: "耳饰", mat: "陶瓷", price: 259, tag: "新品", featured: true },
-  { id: "suxian",   name: "素弦 · 镀银锁骨链",    cat: "项链", mat: "镀银", price: 399, featured: true },
-  { id: "mofeng",   name: "墨峰 · 钛钢手环",      cat: "手链", mat: "钢钛", price: 349, featured: true },
-  { id: "yueman",   name: "月满 · 珍珠耳钉",      cat: "耳饰", mat: "珍珠", price: 219, featured: true },
-  { id: "yanshui",  name: "烟水 · 紫水晶项链",    cat: "项链", mat: "水晶", price: 459 },
-  { id: "diezhang", name: "叠嶂 · 陶瓷串珠手链",  cat: "手链", mat: "陶瓷", price: 289, tag: "新品" },
-  { id: "shuangzhi",name: "霜枝 · 镀银耳线",      cat: "耳饰", mat: "镀银", price: 239 },
-  { id: "zhi",      name: "峙 · 钛钢项圈",        cat: "项链", mat: "钢钛", price: 429 },
-  { id: "shilu",    name: "拾露 · 珍珠手链",      cat: "手链", mat: "珍珠", price: 359 },
-  { id: "kongshan", name: "空山 · 水晶耳饰",      cat: "耳饰", mat: "水晶", price: 269 },
-];
 
 const GILT = "#B08F55";
 
@@ -68,29 +53,36 @@ function artEarring(s) {
   return one(48) + one(116);
 }
 
-const ART = { 项链: artNecklace, 手链: artBracelet, 耳饰: artEarring };
+const ART = { necklace: artNecklace, bracelet: artBracelet, earring: artEarring };
 
-function productSVG(p) {
+function productArt(p, name) {
+  if (p.img) {
+    return `<img src="${p.img}" alt="${name}" loading="lazy"
+      style="width:100%;height:100%;object-fit:cover;">`;
+  }
   const s = MATERIAL_STYLE[p.mat];
-  return `<svg viewBox="0 0 200 200" role="img" aria-label="${p.name} 插画" xmlns="http://www.w3.org/2000/svg">
+  return `<svg viewBox="0 0 200 200" role="img" aria-label="${name}" xmlns="http://www.w3.org/2000/svg">
     <circle cx="100" cy="100" r="86" fill="none" stroke="${GILT}" stroke-width="0.7" opacity="0.45"/>
     ${ART[p.cat](s)}
   </svg>`;
 }
 
 function productCard(p) {
-  const s = MATERIAL_STYLE[p.mat];
+  const lang = getLang();
+  const name = p.name[lang] || p.name.vi;
+  const soldout = p.stock <= 0;
   return `
   <article class="product-card reveal" data-cat="${p.cat}" data-mat="${p.mat}">
     <div class="product-art">
-      ${p.tag ? `<span class="product-tag">${p.tag}</span>` : ""}
-      ${productSVG(p)}
+      ${p.tag ? `<span class="product-tag">${t("tag." + p.tag)}</span>` : ""}
+      ${soldout ? `<span class="product-soldout">${t("product.soldout")}</span>` : ""}
+      ${productArt(p, name)}
     </div>
     <div class="product-info">
-      <h3 class="product-name">${p.name}</h3>
+      <h3 class="product-name">${name}</h3>
       <div class="product-meta">
-        <span class="product-material">${p.mat} · ${s.latin}</span>
-        <span class="product-price">¥ ${p.price}</span>
+        <span class="product-material">${t("mat." + p.mat)}</span>
+        <span class="product-price">${fmtPrice(p.price)}</span>
       </div>
     </div>
   </article>`;
@@ -98,4 +90,19 @@ function productCard(p) {
 
 function renderProducts(el, list) {
   el.innerHTML = list.map(productCard).join("");
+}
+
+let _catalog = null;
+
+async function loadCatalog() {
+  if (_catalog) return _catalog;
+  const res = await fetch("/api/products");
+  if (!res.ok) throw new Error("catalog fetch failed");
+  _catalog = await res.json();
+  return _catalog;
+}
+
+function publicProducts(doc) {
+  const cats = doc.settings.visibleCats;
+  return doc.products.filter((p) => p.visible && cats.includes(p.cat));
 }

@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="vi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>全部商品 · HillMoon 山月</title>
-  <meta name="description" content="HillMoon 山月全部商品：手链、项链、耳饰，可按珍珠、水晶、陶瓷、镀银、钢钛材质挑选。">
+  <title>Tất cả sản phẩm · HillMoon Sơn Nguyệt</title>
+  <meta name="description" content="Tất cả sản phẩm HillMoon: vòng tay, dây chuyền, hoa tai — ngọc trai, pha lê, gốm sứ, mạ bạc, thép titan.">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Serif+SC:wght@400;500;600&family=Noto+Serif:ital,wght@0,400;0,500;0,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body data-page="products">
 
 <header class="site-header">
   <div class="wrap">
@@ -19,53 +19,59 @@
       <span class="latin">HILLMOON</span>
       <span class="han">山月</span>
     </a>
-    <nav class="site-nav" aria-label="主导航">
-      <a href="index.html">首页</a>
-      <a href="products.html" aria-current="page">全部商品</a>
-      <a href="about.html">品牌故事</a>
-      <a href="index.html#contact">联络</a>
+    <nav class="site-nav" aria-label="Menu">
+      <a href="index.html" data-i18n="nav.home">Trang chủ</a>
+      <a href="products.html" aria-current="page" data-i18n="nav.products">Sản phẩm</a>
+      <a href="about.html" data-i18n="nav.about">Câu chuyện</a>
+      <a href="index.html#contact" data-i18n="nav.contact">Liên hệ</a>
     </nav>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button class="lang-btn active" data-lang="vi">VI</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="zh">中</button>
+    </div>
   </div>
 </header>
 
 <section class="page-hero">
-  <h1>全部商品</h1>
+  <h1 data-i18n="products.title">Tất cả sản phẩm</h1>
   <p class="latin">The Collection</p>
 </section>
 
 <main class="section wrap">
-  <div class="filter-bar" role="group" aria-label="商品筛选">
+  <div class="filter-bar" role="group" aria-label="Filter">
     <div class="filter-group" data-key="cat">
-      <span class="filter-label">类别</span>
-      <button class="filter-btn active" data-value="全部">全部</button>
-      <button class="filter-btn" data-value="手链">手链</button>
-      <button class="filter-btn" data-value="项链">项链</button>
-      <button class="filter-btn" data-value="耳饰">耳饰</button>
+      <span class="filter-label" data-i18n="filter.cat">Loại</span>
+      <button class="filter-btn active" data-value="all" data-i18n="filter.all">Tất cả</button>
+      <button class="filter-btn" data-value="bracelet" data-i18n="cat.bracelet">Vòng tay</button>
+      <button class="filter-btn" data-value="necklace" data-i18n="cat.necklace">Dây chuyền</button>
+      <button class="filter-btn" data-value="earring" data-i18n="cat.earring">Hoa tai</button>
     </div>
     <div class="filter-group" data-key="mat">
-      <span class="filter-label">材质</span>
-      <button class="filter-btn active" data-value="全部">全部</button>
-      <button class="filter-btn" data-value="珍珠">珍珠</button>
-      <button class="filter-btn" data-value="水晶">水晶</button>
-      <button class="filter-btn" data-value="陶瓷">陶瓷</button>
-      <button class="filter-btn" data-value="镀银">镀银</button>
-      <button class="filter-btn" data-value="钢钛">钢钛</button>
+      <span class="filter-label" data-i18n="filter.mat">Chất liệu</span>
+      <button class="filter-btn active" data-value="all" data-i18n="filter.all">Tất cả</button>
+      <button class="filter-btn" data-value="pearl" data-i18n="mat.pearl">Ngọc trai</button>
+      <button class="filter-btn" data-value="crystal" data-i18n="mat.crystal">Pha lê</button>
+      <button class="filter-btn" data-value="ceramic" data-i18n="mat.ceramic">Gốm sứ</button>
+      <button class="filter-btn" data-value="silver" data-i18n="mat.silver">Mạ bạc</button>
+      <button class="filter-btn" data-value="titanium" data-i18n="mat.titanium">Thép titan</button>
     </div>
   </div>
 
   <div class="product-grid" id="catalog-grid"></div>
-  <p class="filter-empty" id="catalog-empty" hidden>此组合暂无商品——山中无此物，换个方向看看。</p>
+  <p class="filter-empty" id="catalog-empty" data-i18n="products.empty" hidden>Chưa có sản phẩm trong mục này.</p>
 </main>
 
 <footer class="site-footer">
   <div class="wrap">
     <div class="footer-foot" style="border-top:none; padding-top:0;">
-      <span>© 2026 HillMoon 山月 · 保留所有权利</span>
+      <span data-i18n="footer.copyright">© 2026 HillMoon Sơn Nguyệt · Bảo lưu mọi quyền</span>
       <span>山有清辉，月照佩人</span>
     </div>
   </div>
 </footer>
 
+<script src="js/i18n.js"></script>
 <script src="js/products.js"></script>
 <script src="js/main.js"></script>
 </body>

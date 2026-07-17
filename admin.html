@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>后台管理 · HillMoon 山月</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="latin">HILLMOON</span>
+      <span class="han">后台</span>
+    </a>
+    <nav class="site-nav">
+      <a href="index.html" target="_blank">查看前台 ↗</a>
+      <a href="#" id="logout-link" hidden>退出登录</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap admin-main">
+
+  <section class="admin-login" id="login-box" hidden>
+    <h1>后台登录</h1>
+    <form id="login-form">
+      <div class="admin-field">
+        <label for="login-user">账号</label>
+        <input class="admin-input" id="login-user" autocomplete="username" required>
+      </div>
+      <div class="admin-field">
+        <label for="login-pass">密码</label>
+        <input class="admin-input" id="login-pass" type="password" autocomplete="current-password" required>
+      </div>
+      <p class="admin-error" id="login-error"></p>
+      <button class="btn btn-dark" type="submit" style="width:100%;">登 录</button>
+    </form>
+  </section>
+
+  <section id="dashboard" hidden>
+    <div class="admin-toolbar">
+      <div class="admin-cats" id="cat-toggles">
+        <span class="hint">上架类别</span>
+        <label><input type="checkbox" value="bracelet"> 手链</label>
+        <label><input type="checkbox" value="necklace"> 项链</label>
+        <label><input type="checkbox" value="earring"> 耳饰</label>
+      </div>
+      <div class="admin-actions">
+        <button class="btn btn-dark btn-small" id="add-btn" type="button">＋ 新增商品</button>
+        <button class="btn btn-solid btn-small" id="save-btn" type="button">保存全部</button>
+      </div>
+    </div>
+    <div class="admin-list" id="admin-list"></div>
+  </section>
+
+</main>
+
+<div class="admin-toast" id="toast"></div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
